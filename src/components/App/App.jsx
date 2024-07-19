@@ -1,59 +1,62 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from "react";
+import Description from "./components/Description/Description";
+import Options from "./components/Options/Options";
+import Feedback from "./components/Feedback/Feedback";
+import Notification from "./components/Notification/Notification";
+import "./App.css";
 
-import './App.css';
-import Description from './components/Description/Description';
-import Options from './components/Options/Options';
-import Feedback from './components/Feedback/Feedback';
-import Notification from './components/Notification/Notification';
+export default function App() {
+  const initFeedback = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 
-const DEFAULT_FEEDBACK_DATA = {
-	good: 0,
-	neutral: 0,
-	bad: 0,
-};
+  const [feedbackCount, setFeedbackCount] = useState(() => {
+    const savedFeedbackCount = window.localStorage.getItem("feedback");
+    if (savedFeedbackCount !== null) {
+      return JSON.parse(savedFeedbackCount);
+    } else {
+      return initFeedback;
+    }
+  });
 
-const getLSFeedbackData = () => {
-	return localStorage.getItem('feedback-data') !== null
-		? JSON.parse(localStorage.getItem('feedback-data'))
-		: DEFAULT_FEEDBACK_DATA;
-};
+  useEffect(() => {
+    window.localStorage.setItem("feedback", JSON.stringify(feedbackCount));
+  }, [feedbackCount]);
 
-function App() {
-	const [feedback, setFeedback] = useState(getLSFeedbackData);
+  const updateFeedback = (feedbackType) => {
+    setFeedbackCount((prevFeedback) => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
+    }));
+  };
 
-	useEffect(() => {
-		localStorage.setItem('feedback-data', JSON.stringify(feedback));
-	}, [feedback]);
+  const totalFeedback =
+    feedbackCount.good + feedbackCount.neutral + feedbackCount.bad;
 
-	const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-	const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
+  const positiveFeedback = Math.round(
+    (feedbackCount.good / totalFeedback) * 100
+  );
 
-	const updateFeedback = (feedbackType) => {
-		if (feedbackType === 'reset') {
-			setFeedback(DEFAULT_FEEDBACK_DATA);
-		} else {
-			setFeedback({
-				...feedback,
-				[feedbackType]: feedback[feedbackType] + 1,
-			});
-		}
-	};
-
-	return (
-		<>
-			<Description />
-			<Options updateFeedback={updateFeedback} isVisible={!!totalFeedback} />
-			{totalFeedback ? (
-				<Feedback
-					feedback={feedback}
-					totalFeedback={totalFeedback}
-					positiveFeedback={positiveFeedback}
-				/>
-			) : (
-				<Notification />
-			)}
-		</>
-	);
+  return (
+    <div>
+      <Description />
+      <Options
+        updateFeedback={updateFeedback}
+        total={totalFeedback}
+        resetFeedback={setFeedbackCount}
+        initFeedback={initFeedback}
+      />
+      {totalFeedback !== 0 ? (
+        <Feedback
+          value={feedbackCount}
+          total={totalFeedback}
+          positive={positiveFeedback}
+        />
+      ) : (
+        <Notification />
+      )}
+    </div>
+  );
 }
-
-export default App;

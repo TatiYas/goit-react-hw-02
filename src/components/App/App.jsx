@@ -3,7 +3,7 @@ import Description from "../Description/Description";
 import Feedback from "../Feedback/Feedback";
 import Options from "../Options/Options";
 import Notification from "../Notification/Notification";
-import "./App.module.css";
+import s from "./App.module.css";
 
 export default function App() {
   const initFeedback = {

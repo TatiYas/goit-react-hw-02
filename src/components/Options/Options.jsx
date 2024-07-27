@@ -1,4 +1,5 @@
 import "../Options/Options.module.css";
+import s from "./Options.module.css"
 
 export default function Options({
   updateFeedback,
@@ -7,7 +8,7 @@ export default function Options({
   total,
 }) {
   return (
-    <div>
+    <div className={s.container} >
       <button onClick={() => updateFeedback("good")}>Good</button>
       <button onClick={() => updateFeedback("neutral")}>Neutral</button>
       <button onClick={() => updateFeedback("bad")}>Bad</button>

@@ -1,5 +1,4 @@
 import "./Feedback.module.css";
-
 export default function Feedback({ value, total, positive }) {
   return (
     <ul>

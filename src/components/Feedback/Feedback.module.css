@@ -1,9 +1,9 @@
-ul {
-    font-size: 15px;
+.feed {
+    font-size: 8px;
     margin: 0 auto;
     align-items: center;
     display: flex;
     flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 15px;
   }

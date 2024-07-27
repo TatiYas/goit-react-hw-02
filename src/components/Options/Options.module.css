@@ -1,5 +1,16 @@
 button {
-    margin-right: 8px;
-    margin-bottom: 20px;
-    font-size: 20px;
+  display: flex;
+  margin: auto;
+  width: 100px;
+  gap: 10px;
+  
+  }
+.container > button{
+    font-size: 18px;
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
   }

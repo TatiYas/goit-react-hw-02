@@ -12,8 +12,14 @@
 }
 
 .span {
-  width: 300px;
-  height: 4px;
-  background-color: #b6d21687;
+  width: 600px;
+  height: 8px;
+  background-color: #2c320587;
+  margin: 20px auto;
+}
+.s.span2 {
+  width: 600px;
+  height: 8px;
+  background-color: #2c320587;
   margin: 20px auto;
 }
